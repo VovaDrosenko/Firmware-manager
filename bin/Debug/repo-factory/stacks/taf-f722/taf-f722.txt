@@ -1,0 +1,6 @@
+fc:     taf f405 mk2 v2722 (target: dakepvf722)
+esc:    taf f60 (updgated to blujay)
+
+uart2: elrs
+uart5: vtx
+

@@ -1,0 +1,22 @@
+feature SERVO_TILT
+feature CHANNEL_FORWARDING 
+
+resource MOTOR 5 NONE
+resource SERVO 1 B00
+
+servo 0 1000 2000 1500 100 7
+
+save
+
+
+
+feature SERVO_TILT
+feature CHANNEL_FORWARDING 
+
+resource LED_STRIP NONE 
+resource SERVO 1 B03
+
+servo 0 1000 2000 1500 100 7
+
+save
+

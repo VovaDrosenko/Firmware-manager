@@ -1,0 +1,37 @@
+batch start
+
+# https://rushfpv.net/products/1-6w-1-3g
+
+# vtxtable
+vtxtable bands 2
+vtxtable channels 8
+vtxtable band 1 1G3_A    A CUSTOM  1080 1120 1160 1200 1240 1280 1320 1360
+vtxtable band 2 1G3_B    B CUSTOM  1080 1120 1160 1200 1258 1280 1320 1360
+vtxtable powerlevels 2
+vtxtable powervalues 25 1600
+vtxtable powerlabels 25 1W6
+
+# vtx, power switch not suporting
+vtx 0 0 0 0 0 900 900
+vtx 1 0 0 0 0 900 900
+vtx 2 0 0 0 0 900 900
+vtx 3 0 0 0 0 900 900
+vtx 4 0 0 0 0 900 900
+vtx 5 0 0 0 0 900 900
+vtx 6 0 0 0 0 900 900
+vtx 7 0 0 0 0 900 900
+vtx 8 0 0 0 0 900 900
+vtx 9 0 0 0 0 900 900
+
+#osd, not show vtx power
+set osd_vtx_channel_pos = 16600
+
+# config
+set vtx_band = 1
+set vtx_channel = 1
+set vtx_power = 1
+set vtx_low_power_disarm = ON
+set vtx_freq = 1080
+set vtx_pit_mode_freq = 0
+
+save

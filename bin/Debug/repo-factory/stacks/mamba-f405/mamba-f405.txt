@@ -1,0 +1,6 @@
+fc:     mamba f405 mk2 v2 (target: fury4osd)
+esc:    mamba f55 bls, c-h-40 bheli_s (updgated to blujay)
+
+uart1: elrs
+uart3: vtx
+

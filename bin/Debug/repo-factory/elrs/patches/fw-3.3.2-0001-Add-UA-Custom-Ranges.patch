@@ -1,0 +1,323 @@
+From e635e4019ca00782f2b71b779d9cacb6a753b63c Mon Sep 17 00:00:00 2001
+From: drmichael <drmichael.dragoons@gmail.com>
+Date: Wed, 17 Apr 2024 19:08:41 +0300
+Subject: [PATCH 1/2] Add UA Custom Ranges from: 370mhz to 550 mhz, step 20 mhz
+ from: 730mhz to 1010mhz, step 20 mhz wide ranges: LO and HI
+
+---
+ src/html/index.html         | 33 +++++++++++++++++++
+ src/include/targets.h       | 53 +++++++++++++++++++++++++++++++
+ src/lib/FHSS/FHSS.cpp       | 35 ++++++++++++++++++++-
+ src/lib/OPTIONS/options.cpp | 63 +++++++++++++++++++++++++++++++++++++
+ src/python/build_flags.py   | 63 +++++++++++++++++++++++++++++++++++++
+ 5 files changed, 246 insertions(+), 1 deletion(-)
+
+diff --git a/src/html/index.html b/src/html/index.html
+index 776be2ba..01d4fc01 100644
+--- a/src/html/index.html
++++ b/src/html/index.html
+@@ -61,6 +61,39 @@
+ 								<option value='3'>IN866</option>
+ 								<option value='4'>AU433</option>
+ 								<option value='5'>EU433</option>
++
++								<option value='6'>UA370</option>
++								<option value='7'>UA390</option>
++								<option value='8'>UA410</option>
++								<option value='9'>UA430</option>
++								<option value='10'>UA450</option>
++								<option value='11'>UA470</option>
++								<option value='12'>UA490</option>
++								<option value='13'>UA510</option>
++								<option value='14'>UA530</option>
++								<option value='15'>UA550</option>
++
++								<option value='16'>UA730</option>
++								<option value='17'>UA750</option>
++								<option value='18'>UA770</option>
++								<option value='19'>UA790</option>
++								<option value='20'>UA810</option>
++								<option value='21'>UA830</option>
++								<option value='22'>UA850</option>
++								<option value='23'>UA870</option>
++								<option value='24'>UA890</option>
++								<option value='25'>UA910</option>
++								<option value='26'>UA930</option>
++								<option value='27'>UA950</option>
++								<option value='28'>UA970</option>
++								<option value='29'>UA990</option>
++								<option value='30'>UA1010</option>
++
++								<option value='31'>UA_LO0</option>
++								<option value='32'>UA_LO1</option>
++								<option value='33'>UA_HI0</option>
++								<option value='34'>UA_HI1</option>
++								<option value='35'>UA_HI2</option>
+ 							</select>
+ 							<label>Regulatory domain</label>
+ 						</div>
+diff --git a/src/include/targets.h b/src/include/targets.h
+index 8fe5dbaf..1854dc4d 100644
+--- a/src/include/targets.h
++++ b/src/include/targets.h
+@@ -264,10 +264,63 @@ extern bool pwmSerialDefined;
+ #undef Regulatory_Domain_AU_433
+ #undef Regulatory_Domain_EU_433
+ 
++#undef Regulatory_Domain_UA370
++#undef Regulatory_Domain_UA390
++#undef Regulatory_Domain_UA410
++#undef Regulatory_Domain_UA430
++#undef Regulatory_Domain_UA450
++#undef Regulatory_Domain_UA470
++#undef Regulatory_Domain_UA490
++#undef Regulatory_Domain_UA510
++#undef Regulatory_Domain_UA530
++#undef Regulatory_Domain_UA550
++
++#undef Regulatory_Domain_UA730
++#undef Regulatory_Domain_UA750
++#undef Regulatory_Domain_UA770
++#undef Regulatory_Domain_UA790
++#undef Regulatory_Domain_UA810
++#undef Regulatory_Domain_UA830
++#undef Regulatory_Domain_UA850
++#undef Regulatory_Domain_UA870
++#undef Regulatory_Domain_UA890
++#undef Regulatory_Domain_UA910
++#undef Regulatory_Domain_UA930
++#undef Regulatory_Domain_UA950
++#undef Regulatory_Domain_UA970
++#undef Regulatory_Domain_UA990
++#undef Regulatory_Domain_UA1010
++
++#undef Regulatory_Domain_UA_LO0
++#undef Regulatory_Domain_UA_LO1
++#undef Regulatory_Domain_UA_HI0
++#undef Regulatory_Domain_UA_HI1
++#undef Regulatory_Domain_UA_HI2
++
+ #elif defined(RADIO_SX127X)
+ #if !(defined(Regulatory_Domain_AU_915) || defined(Regulatory_Domain_FCC_915) || \
+         defined(Regulatory_Domain_EU_868) || defined(Regulatory_Domain_IN_866) || \
+         defined(Regulatory_Domain_AU_433) || defined(Regulatory_Domain_EU_433) || \
++\
++        defined(Regulatory_Domain_UA370) || defined(Regulatory_Domain_UA390) || \
++        defined(Regulatory_Domain_UA410) || defined(Regulatory_Domain_UA430) || \
++        defined(Regulatory_Domain_UA450) || defined(Regulatory_Domain_UA470) || \
++        defined(Regulatory_Domain_UA490) || defined(Regulatory_Domain_UA510) || \
++        defined(Regulatory_Domain_UA530) || defined(Regulatory_Domain_UA550) || \
++\
++        defined(Regulatory_Domain_UA730) || defined(Regulatory_Domain_UA750) || \
++        defined(Regulatory_Domain_UA770) || defined(Regulatory_Domain_UA790) || \
++        defined(Regulatory_Domain_UA810) || defined(Regulatory_Domain_UA830) || \
++        defined(Regulatory_Domain_UA850) || defined(Regulatory_Domain_UA870) || \
++        defined(Regulatory_Domain_UA890) || defined(Regulatory_Domain_UA910) || \
++        defined(Regulatory_Domain_UA930) || defined(Regulatory_Domain_UA950) || \
++        defined(Regulatory_Domain_UA970) || defined(Regulatory_Domain_UA990) || \
++        defined(Regulatory_Domain_UA1010) || \
++\
++        defined(Regulatory_Domain_UA_LO0)|| defined(Regulatory_Domain_UA_LO1)|| \
++        defined(Regulatory_Domain_UA_HI0)|| defined(Regulatory_Domain_UA_HI1)|| \
++        defined(Regulatory_Domain_UA_HI2)|| \
++\
+         defined(UNIT_TEST))
+ #error "Regulatory_Domain is not defined for 900MHz device. Check user_defines.txt!"
+ #endif
+diff --git a/src/lib/FHSS/FHSS.cpp b/src/lib/FHSS/FHSS.cpp
+index b9b7ba11..8dce84dc 100644
+--- a/src/lib/FHSS/FHSS.cpp
++++ b/src/lib/FHSS/FHSS.cpp
+@@ -12,7 +12,40 @@ const fhss_config_t domains[] = {
+     {"EU868",  FREQ_HZ_TO_REG_VAL(865275000), FREQ_HZ_TO_REG_VAL(869575000), 13},
+     {"IN866",  FREQ_HZ_TO_REG_VAL(865375000), FREQ_HZ_TO_REG_VAL(866950000), 4},
+     {"AU433",  FREQ_HZ_TO_REG_VAL(433420000), FREQ_HZ_TO_REG_VAL(434420000), 3},
+-    {"EU433",  FREQ_HZ_TO_REG_VAL(433100000), FREQ_HZ_TO_REG_VAL(434450000), 3}
++    {"EU433",  FREQ_HZ_TO_REG_VAL(433100000), FREQ_HZ_TO_REG_VAL(434450000), 3},
++
++    {"UA370",  FREQ_HZ_TO_REG_VAL(358300000), FREQ_HZ_TO_REG_VAL(381700000), 40},
++    {"UA390",  FREQ_HZ_TO_REG_VAL(378300000), FREQ_HZ_TO_REG_VAL(401700000), 40},
++    {"UA410",  FREQ_HZ_TO_REG_VAL(398300000), FREQ_HZ_TO_REG_VAL(421700000), 40},
++    {"UA430",  FREQ_HZ_TO_REG_VAL(418300000), FREQ_HZ_TO_REG_VAL(441700000), 40},
++    {"UA450",  FREQ_HZ_TO_REG_VAL(438300000), FREQ_HZ_TO_REG_VAL(461700000), 40},
++    {"UA470",  FREQ_HZ_TO_REG_VAL(458300000), FREQ_HZ_TO_REG_VAL(481700000), 40},
++    {"UA490",  FREQ_HZ_TO_REG_VAL(478300000), FREQ_HZ_TO_REG_VAL(501700000), 40},
++    {"UA510",  FREQ_HZ_TO_REG_VAL(498300000), FREQ_HZ_TO_REG_VAL(521700000), 40},
++    {"UA530",  FREQ_HZ_TO_REG_VAL(518300000), FREQ_HZ_TO_REG_VAL(541700000), 40},
++    {"UA550",  FREQ_HZ_TO_REG_VAL(538300000), FREQ_HZ_TO_REG_VAL(561700000), 40},
++
++    {"UA730",  FREQ_HZ_TO_REG_VAL(718300000), FREQ_HZ_TO_REG_VAL(741700000), 40},
++    {"UA750",  FREQ_HZ_TO_REG_VAL(738300000), FREQ_HZ_TO_REG_VAL(761700000), 40},
++    {"UA770",  FREQ_HZ_TO_REG_VAL(758300000), FREQ_HZ_TO_REG_VAL(781700000), 40},
++    {"UA790",  FREQ_HZ_TO_REG_VAL(778300000), FREQ_HZ_TO_REG_VAL(801700000), 40},
++    {"UA810",  FREQ_HZ_TO_REG_VAL(798300000), FREQ_HZ_TO_REG_VAL(821700000), 40},
++    {"UA830",  FREQ_HZ_TO_REG_VAL(818300000), FREQ_HZ_TO_REG_VAL(841700000), 40},
++    {"UA850",  FREQ_HZ_TO_REG_VAL(838300000), FREQ_HZ_TO_REG_VAL(861700000), 40},
++    {"UA870",  FREQ_HZ_TO_REG_VAL(858300000), FREQ_HZ_TO_REG_VAL(881700000), 40},
++    {"UA890",  FREQ_HZ_TO_REG_VAL(878300000), FREQ_HZ_TO_REG_VAL(901700000), 40},
++    {"UA910",  FREQ_HZ_TO_REG_VAL(898300000), FREQ_HZ_TO_REG_VAL(921700000), 40},
++    {"UA930",  FREQ_HZ_TO_REG_VAL(918300000), FREQ_HZ_TO_REG_VAL(941700000), 40},
++    {"UA950",  FREQ_HZ_TO_REG_VAL(938300000), FREQ_HZ_TO_REG_VAL(961700000), 40},
++    {"UA970",  FREQ_HZ_TO_REG_VAL(958300000), FREQ_HZ_TO_REG_VAL(981700000), 40},
++    {"UA990",  FREQ_HZ_TO_REG_VAL(978300000), FREQ_HZ_TO_REG_VAL(1001700000), 40},
++    {"UA1010",  FREQ_HZ_TO_REG_VAL(998300000), FREQ_HZ_TO_REG_VAL(1021700000), 40},
++
++    {"UA_LO0",  FREQ_HZ_TO_REG_VAL(358300000), FREQ_HZ_TO_REG_VAL(461700000), 200},
++    {"UA_LO1",  FREQ_HZ_TO_REG_VAL(458300000), FREQ_HZ_TO_REG_VAL(561700000), 200},
++    {"UA_HI0",  FREQ_HZ_TO_REG_VAL(718300000), FREQ_HZ_TO_REG_VAL(821700000), 200},
++    {"UA_HI1",  FREQ_HZ_TO_REG_VAL(818300000), FREQ_HZ_TO_REG_VAL(921700000), 200},
++    {"UA_HI2",  FREQ_HZ_TO_REG_VAL(918300000), FREQ_HZ_TO_REG_VAL(1021700000), 200},
+ };
+ #elif defined(RADIO_SX128X)
+ #include "SX1280Driver.h"
+diff --git a/src/lib/OPTIONS/options.cpp b/src/lib/OPTIONS/options.cpp
+index 2589aff1..ec06b36c 100644
+--- a/src/lib/OPTIONS/options.cpp
++++ b/src/lib/OPTIONS/options.cpp
+@@ -47,6 +47,69 @@ __attribute__ ((used)) static firmware_options_t flashedOptions = {
+     .domain = 4,
+     #elif defined(Regulatory_Domain_EU_433)
+     .domain = 5,
++ 
++    #elif defined(Regulatory_Domain_UA370)
++    .domain = 6,
++    #elif defined(Regulatory_Domain_UA390)
++    .domain = 7,
++    #elif defined(Regulatory_Domain_UA410)
++    .domain = 8,
++    #elif defined(Regulatory_Domain_UA430)
++    .domain = 9,
++    #elif defined(Regulatory_Domain_UA450)
++    .domain = 10,
++    #elif defined(Regulatory_Domain_UA470)
++    .domain = 11,
++    #elif defined(Regulatory_Domain_UA490)
++    .domain = 12,
++    #elif defined(Regulatory_Domain_UA510)
++    .domain = 13,
++    #elif defined(Regulatory_Domain_UA530)
++    .domain = 14,
++    #elif defined(Regulatory_Domain_UA550)
++    .domain = 15,
++
++    #elif defined(Regulatory_Domain_UA730)
++    .domain = 16,
++    #elif defined(Regulatory_Domain_UA750)
++    .domain = 17,
++    #elif defined(Regulatory_Domain_UA770)
++    .domain = 18,
++    #elif defined(Regulatory_Domain_UA790)
++    .domain = 19,
++    #elif defined(Regulatory_Domain_UA810)
++    .domain = 20,
++    #elif defined(Regulatory_Domain_UA830)
++    .domain = 21,
++    #elif defined(Regulatory_Domain_UA850)
++    .domain = 22,
++    #elif defined(Regulatory_Domain_UA870)
++    .domain = 23,
++    #elif defined(Regulatory_Domain_UA890)
++    .domain = 24,
++    #elif defined(Regulatory_Domain_UA910)
++    .domain = 25,
++    #elif defined(Regulatory_Domain_UA930)
++    .domain = 26,
++    #elif defined(Regulatory_Domain_UA950)
++    .domain = 27,
++    #elif defined(Regulatory_Domain_UA970)
++    .domain = 28,
++    #elif defined(Regulatory_Domain_UA990)
++    .domain = 29,
++    #elif defined(Regulatory_Domain_UA1010)
++    .domain = 30,
++
++    #elif defined(Regulatory_Domain_UA_LO0)
++    .domain = 31,
++    #elif defined(Regulatory_Domain_UA_LO1)
++    .domain = 32,
++    #elif defined(Regulatory_Domain_UA_HI0)
++    .domain = 33,
++    #elif defined(Regulatory_Domain_UA_HI1)
++    .domain = 34,
++    #elif defined(Regulatory_Domain_UA_HI2)
++    .domain = 35,
+     #else
+     #error No regulatory domain defined, please define one in user_defines.txt
+     #endif
+diff --git a/src/python/build_flags.py b/src/python/build_flags.py
+index 7274f73c..2322afe3 100644
+--- a/src/python/build_flags.py
++++ b/src/python/build_flags.py
+@@ -170,6 +170,69 @@ if '-DRADIO_SX127X=1' in build_flags:
+         json_flags['domain'] = 4
+     if fnmatch.filter(build_flags, '*-DRegulatory_Domain_EU_433'):
+         json_flags['domain'] = 5
++
++    if fnmatch.filter(build_flags, '*-DRegulatory_Domain_UA370'):
++        json_flags['domain'] = 6
++    if fnmatch.filter(build_flags, '*-DRegulatory_Domain_UA390'):
++        json_flags['domain'] = 7
++    if fnmatch.filter(build_flags, '*-DRegulatory_Domain_UA410'):
++        json_flags['domain'] = 8
++    if fnmatch.filter(build_flags, '*-DRegulatory_Domain_UA430'):
++        json_flags['domain'] = 9
++    if fnmatch.filter(build_flags, '*-DRegulatory_Domain_UA450'):
++        json_flags['domain'] = 10
++    if fnmatch.filter(build_flags, '*-DRegulatory_Domain_UA470'):
++        json_flags['domain'] = 11
++    if fnmatch.filter(build_flags, '*-DRegulatory_Domain_UA490'):
++        json_flags['domain'] = 12
++    if fnmatch.filter(build_flags, '*-DRegulatory_Domain_UA510'):
++        json_flags['domain'] = 13
++    if fnmatch.filter(build_flags, '*-DRegulatory_Domain_UA530'):
++        json_flags['domain'] = 14
++    if fnmatch.filter(build_flags, '*-DRegulatory_Domain_UA550'):
++        json_flags['domain'] = 15
++
++    if fnmatch.filter(build_flags, '*-DRegulatory_Domain_UA730'):
++        json_flags['domain'] = 16
++    if fnmatch.filter(build_flags, '*-DRegulatory_Domain_UA750'):
++        json_flags['domain'] = 17
++    if fnmatch.filter(build_flags, '*-DRegulatory_Domain_UA770'):
++        json_flags['domain'] = 18
++    if fnmatch.filter(build_flags, '*-DRegulatory_Domain_UA790'):
++        json_flags['domain'] = 19
++    if fnmatch.filter(build_flags, '*-DRegulatory_Domain_UA810'):
++        json_flags['domain'] = 20
++    if fnmatch.filter(build_flags, '*-DRegulatory_Domain_UA830'):
++        json_flags['domain'] = 21
++    if fnmatch.filter(build_flags, '*-DRegulatory_Domain_UA850'):
++        json_flags['domain'] = 22
++    if fnmatch.filter(build_flags, '*-DRegulatory_Domain_UA870'):
++        json_flags['domain'] = 23
++    if fnmatch.filter(build_flags, '*-DRegulatory_Domain_UA890'):
++        json_flags['domain'] = 24
++    if fnmatch.filter(build_flags, '*-DRegulatory_Domain_UA910'):
++        json_flags['domain'] = 25
++    if fnmatch.filter(build_flags, '*-DRegulatory_Domain_UA930'):
++        json_flags['domain'] = 26
++    if fnmatch.filter(build_flags, '*-DRegulatory_Domain_UA950'):
++        json_flags['domain'] = 27
++    if fnmatch.filter(build_flags, '*-DRegulatory_Domain_UA970'):
++        json_flags['domain'] = 28
++    if fnmatch.filter(build_flags, '*-DRegulatory_Domain_UA990'):
++        json_flags['domain'] = 29
++    if fnmatch.filter(build_flags, '*-DRegulatory_Domain_UA1010'):
++        json_flags['domain'] = 30
++
++    if fnmatch.filter(build_flags, '*-DRegulatory_Domain_UA_LO0'):
++        json_flags['domain'] = 31
++    if fnmatch.filter(build_flags, '*-DRegulatory_Domain_UA_LO1'):
++        json_flags['domain'] = 32
++    if fnmatch.filter(build_flags, '*-DRegulatory_Domain_UA_HI0'):
++        json_flags['domain'] = 33
++    if fnmatch.filter(build_flags, '*-DRegulatory_Domain_UA_HI1'):
++        json_flags['domain'] = 34
++    if fnmatch.filter(build_flags, '*-DRegulatory_Domain_UA_HI2'):
++        json_flags['domain'] = 35
+ else:
+     json_flags['domain'] = 0
+ 
+-- 
+2.43.0.windows.1
+

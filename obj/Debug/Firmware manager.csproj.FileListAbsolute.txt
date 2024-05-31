@@ -1,0 +1,7 @@
+C:\Users\Volodymyr\source\repos\Firmware manager\bin\Debug\Firmware manager.exe.config
+C:\Users\Volodymyr\source\repos\Firmware manager\bin\Debug\Firmware manager.exe
+C:\Users\Volodymyr\source\repos\Firmware manager\bin\Debug\Firmware manager.pdb
+C:\Users\Volodymyr\source\repos\Firmware manager\obj\Debug\Firmware manager.csproj.AssemblyReference.cache
+C:\Users\Volodymyr\source\repos\Firmware manager\obj\Debug\Firmware manager.csproj.CoreCompileInputs.cache
+C:\Users\Volodymyr\source\repos\Firmware manager\obj\Debug\Firmware manager.exe
+C:\Users\Volodymyr\source\repos\Firmware manager\obj\Debug\Firmware manager.pdb

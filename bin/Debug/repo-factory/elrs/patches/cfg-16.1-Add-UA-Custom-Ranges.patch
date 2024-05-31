@@ -1,0 +1,497 @@
+From d59834bef7aef53d91e3b6f5285dc0bf905c9a15 Mon Sep 17 00:00:00 2001
+From: drmichael <dr_michael@bigmir.net>
+Date: Thu, 1 Feb 2024 03:59:21 +0200
+Subject: [PATCH] Add UA Custom Ranges
+
+---
+ devices/betafpv-900.json                         |  6 ++++++
+ devices/diy-900.json                             | 16 ++++++++++++++++
+ devices/emax-900.json                            |  4 ++++
+ devices/frsky-900.json                           | 16 ++++++++++++++++
+ devices/happymodel-900.json                      |  8 ++++++++
+ devices/hglrc-900.json                           |  2 ++
+ devices/iflight-900.json                         |  4 ++++
+ devices/jumper-900.json                          |  2 ++
+ devices/namimnorc-900.json                       |  8 ++++++++
+ devices/neutronrc-900.json                       |  2 ++
+ .../src/factories/TargetUserDefinesFactory.ts    | 12 ++++++++++++
+ .../FirmwareBuilder/Enum/UserDefineKey.ts        |  2 ++
+ .../BinaryConfigurator/index.ts                  |  6 ++++++
+ .../DeviceDescriptionsLoader/index.ts            |  6 ++++++
+ src/ui/components/DeviceOptionsForm/index.tsx    |  2 ++
+ .../components/UserDefineDescription/index.tsx   |  2 ++
+ src/ui/gql/generated/types.ts                    |  2 ++
+ .../ConfiguratorView/UserDefinesValidator.ts     |  2 ++
+ 18 files changed, 102 insertions(+)
+
+diff --git a/devices/betafpv-900.json b/devices/betafpv-900.json
+index 1ea13190..ef60d30d 100644
+--- a/devices/betafpv-900.json
++++ b/devices/betafpv-900.json
+@@ -17,6 +17,8 @@
+       "REGULATORY_DOMAIN_EU_868",
+       "REGULATORY_DOMAIN_FCC_915",
+       "REGULATORY_DOMAIN_IN_866",
++      "REGULATORY_DOMAIN_UA_750",
++      "REGULATORY_DOMAIN_UA_980",
+       "BINDING_PHRASE",
+       "TLM_REPORT_INTERVAL_MS",
+       "UART_INVERTED",
+@@ -55,6 +57,8 @@
+       "REGULATORY_DOMAIN_EU_868",
+       "REGULATORY_DOMAIN_FCC_915",
+       "REGULATORY_DOMAIN_IN_866",
++      "REGULATORY_DOMAIN_UA_750",
++      "REGULATORY_DOMAIN_UA_980",
+       "BINDING_PHRASE",
+       "TLM_REPORT_INTERVAL_MS",
+       "UART_INVERTED",
+@@ -89,6 +93,8 @@
+       "REGULATORY_DOMAIN_EU_868",
+       "REGULATORY_DOMAIN_FCC_915",
+       "REGULATORY_DOMAIN_IN_866",
++      "REGULATORY_DOMAIN_UA_750",
++      "REGULATORY_DOMAIN_UA_980",
+       "BINDING_PHRASE",
+       "LOCK_ON_FIRST_CONNECTION",
+       "AUTO_WIFI_ON_INTERVAL",
+diff --git a/devices/diy-900.json b/devices/diy-900.json
+index 91e3c0ce..a13f10b0 100644
+--- a/devices/diy-900.json
++++ b/devices/diy-900.json
+@@ -17,6 +17,8 @@
+       "REGULATORY_DOMAIN_EU_868",
+       "REGULATORY_DOMAIN_FCC_915",
+       "REGULATORY_DOMAIN_IN_866",
++      "REGULATORY_DOMAIN_UA_750",
++      "REGULATORY_DOMAIN_UA_980",
+       "BINDING_PHRASE",
+       "TLM_REPORT_INTERVAL_MS",
+       "UART_INVERTED",
+@@ -46,6 +48,8 @@
+       "REGULATORY_DOMAIN_EU_868",
+       "REGULATORY_DOMAIN_FCC_915",
+       "REGULATORY_DOMAIN_IN_866",
++      "REGULATORY_DOMAIN_UA_750",
++      "REGULATORY_DOMAIN_UA_980",
+       "BINDING_PHRASE",
+       "TLM_REPORT_INTERVAL_MS",
+       "UART_INVERTED",
+@@ -75,6 +79,8 @@
+       "REGULATORY_DOMAIN_EU_868",
+       "REGULATORY_DOMAIN_FCC_915",
+       "REGULATORY_DOMAIN_IN_866",
++      "REGULATORY_DOMAIN_UA_750",
++      "REGULATORY_DOMAIN_UA_980",
+       "BINDING_PHRASE",
+       "TLM_REPORT_INTERVAL_MS",
+       "UART_INVERTED",
+@@ -105,6 +111,8 @@
+       "REGULATORY_DOMAIN_EU_868",
+       "REGULATORY_DOMAIN_FCC_915",
+       "REGULATORY_DOMAIN_IN_866",
++      "REGULATORY_DOMAIN_UA_750",
++      "REGULATORY_DOMAIN_UA_980",
+       "BINDING_PHRASE",
+       "TLM_REPORT_INTERVAL_MS",
+       "UART_INVERTED",
+@@ -138,6 +146,8 @@
+       "REGULATORY_DOMAIN_EU_868",
+       "REGULATORY_DOMAIN_FCC_915",
+       "REGULATORY_DOMAIN_IN_866",
++      "REGULATORY_DOMAIN_UA_750",
++      "REGULATORY_DOMAIN_UA_980",
+       "BINDING_PHRASE",
+       "LOCK_ON_FIRST_CONNECTION",
+       "AUTO_WIFI_ON_INTERVAL",
+@@ -181,6 +191,8 @@
+       "REGULATORY_DOMAIN_EU_868",
+       "REGULATORY_DOMAIN_FCC_915",
+       "REGULATORY_DOMAIN_IN_866",
++      "REGULATORY_DOMAIN_UA_750",
++      "REGULATORY_DOMAIN_UA_980",
+       "BINDING_PHRASE",
+       "LOCK_ON_FIRST_CONNECTION",
+       "AUTO_WIFI_ON_INTERVAL",
+@@ -205,6 +217,8 @@
+       "REGULATORY_DOMAIN_EU_868",
+       "REGULATORY_DOMAIN_FCC_915",
+       "REGULATORY_DOMAIN_IN_866",
++      "REGULATORY_DOMAIN_UA_750",
++      "REGULATORY_DOMAIN_UA_980",
+       "BINDING_PHRASE",
+       "LOCK_ON_FIRST_CONNECTION",
+       "RCVR_UART_BAUD"
+@@ -227,6 +241,8 @@
+       "REGULATORY_DOMAIN_EU_868",
+       "REGULATORY_DOMAIN_FCC_915",
+       "REGULATORY_DOMAIN_IN_866",
++      "REGULATORY_DOMAIN_UA_750",
++      "REGULATORY_DOMAIN_UA_980",
+       "BINDING_PHRASE",
+       "TLM_REPORT_INTERVAL_MS",
+       "UART_INVERTED"
+diff --git a/devices/emax-900.json b/devices/emax-900.json
+index 89c092ef..9494f65d 100644
+--- a/devices/emax-900.json
++++ b/devices/emax-900.json
+@@ -17,6 +17,8 @@
+       "REGULATORY_DOMAIN_EU_868",
+       "REGULATORY_DOMAIN_FCC_915",
+       "REGULATORY_DOMAIN_IN_866",
++      "REGULATORY_DOMAIN_UA_750",
++      "REGULATORY_DOMAIN_UA_980",
+       "BINDING_PHRASE",
+       "TLM_REPORT_INTERVAL_MS",
+       "UART_INVERTED",
+@@ -46,6 +48,8 @@
+       "REGULATORY_DOMAIN_EU_868",
+       "REGULATORY_DOMAIN_FCC_915",
+       "REGULATORY_DOMAIN_IN_866",
++      "REGULATORY_DOMAIN_UA_750",
++      "REGULATORY_DOMAIN_UA_980",
+       "BINDING_PHRASE",
+       "TLM_REPORT_INTERVAL_MS",
+       "UART_INVERTED",
+diff --git a/devices/frsky-900.json b/devices/frsky-900.json
+index 830f2258..fddb7b80 100644
+--- a/devices/frsky-900.json
++++ b/devices/frsky-900.json
+@@ -21,6 +21,8 @@
+       "REGULATORY_DOMAIN_EU_868",
+       "REGULATORY_DOMAIN_FCC_915",
+       "REGULATORY_DOMAIN_IN_866",
++      "REGULATORY_DOMAIN_UA_750",
++      "REGULATORY_DOMAIN_UA_980",
+       "BINDING_PHRASE",
+       "TLM_REPORT_INTERVAL_MS",
+       "JUST_BEEP_ONCE",
+@@ -51,6 +53,8 @@
+       "REGULATORY_DOMAIN_EU_868",
+       "REGULATORY_DOMAIN_FCC_915",
+       "REGULATORY_DOMAIN_IN_866",
++      "REGULATORY_DOMAIN_UA_750",
++      "REGULATORY_DOMAIN_UA_980",
+       "BINDING_PHRASE",
+       "TLM_REPORT_INTERVAL_MS",
+       "JUST_BEEP_ONCE",
+@@ -75,6 +79,8 @@
+       "REGULATORY_DOMAIN_EU_868",
+       "REGULATORY_DOMAIN_FCC_915",
+       "REGULATORY_DOMAIN_IN_866",
++      "REGULATORY_DOMAIN_UA_750",
++      "REGULATORY_DOMAIN_UA_980",
+       "BINDING_PHRASE",
+       "TLM_REPORT_INTERVAL_MS",
+       "UNLOCK_HIGHER_POWER",
+@@ -104,6 +110,8 @@
+       "REGULATORY_DOMAIN_EU_868",
+       "REGULATORY_DOMAIN_FCC_915",
+       "REGULATORY_DOMAIN_IN_866",
++      "REGULATORY_DOMAIN_UA_750",
++      "REGULATORY_DOMAIN_UA_980",
+       "BINDING_PHRASE",
+       "LOCK_ON_FIRST_CONNECTION",
+       "USE_R9MM_R9MINI_SBUS",
+@@ -131,6 +139,8 @@
+       "REGULATORY_DOMAIN_EU_868",
+       "REGULATORY_DOMAIN_FCC_915",
+       "REGULATORY_DOMAIN_IN_866",
++      "REGULATORY_DOMAIN_UA_750",
++      "REGULATORY_DOMAIN_UA_980",
+       "BINDING_PHRASE",
+       "LOCK_ON_FIRST_CONNECTION",
+       "RCVR_UART_BAUD"
+@@ -157,6 +167,8 @@
+       "REGULATORY_DOMAIN_EU_868",
+       "REGULATORY_DOMAIN_FCC_915",
+       "REGULATORY_DOMAIN_IN_866",
++      "REGULATORY_DOMAIN_UA_750",
++      "REGULATORY_DOMAIN_UA_980",
+       "BINDING_PHRASE",
+       "LOCK_ON_FIRST_CONNECTION",
+       "RCVR_UART_BAUD"
+@@ -183,6 +195,8 @@
+       "REGULATORY_DOMAIN_EU_868",
+       "REGULATORY_DOMAIN_FCC_915",
+       "REGULATORY_DOMAIN_IN_866",
++      "REGULATORY_DOMAIN_UA_750",
++      "REGULATORY_DOMAIN_UA_980",
+       "BINDING_PHRASE",
+       "LOCK_ON_FIRST_CONNECTION",
+       "RCVR_UART_BAUD"
+@@ -209,6 +223,8 @@
+       "REGULATORY_DOMAIN_EU_868",
+       "REGULATORY_DOMAIN_FCC_915",
+       "REGULATORY_DOMAIN_IN_866",
++      "REGULATORY_DOMAIN_UA_750",
++      "REGULATORY_DOMAIN_UA_980",
+       "BINDING_PHRASE",
+       "LOCK_ON_FIRST_CONNECTION",
+       "RCVR_UART_BAUD"
+diff --git a/devices/happymodel-900.json b/devices/happymodel-900.json
+index 4d911feb..347169d9 100644
+--- a/devices/happymodel-900.json
++++ b/devices/happymodel-900.json
+@@ -17,6 +17,8 @@
+       "REGULATORY_DOMAIN_EU_868",
+       "REGULATORY_DOMAIN_FCC_915",
+       "REGULATORY_DOMAIN_IN_866",
++      "REGULATORY_DOMAIN_UA_750",
++      "REGULATORY_DOMAIN_UA_980",
+       "BINDING_PHRASE",
+       "TLM_REPORT_INTERVAL_MS",
+       "UNLOCK_HIGHER_POWER",
+@@ -51,6 +53,8 @@
+       "REGULATORY_DOMAIN_EU_868",
+       "REGULATORY_DOMAIN_FCC_915",
+       "REGULATORY_DOMAIN_IN_866",
++      "REGULATORY_DOMAIN_UA_750",
++      "REGULATORY_DOMAIN_UA_980",
+       "BINDING_PHRASE",
+       "LOCK_ON_FIRST_CONNECTION",
+       "AUTO_WIFI_ON_INTERVAL",
+@@ -85,6 +89,8 @@
+       "REGULATORY_DOMAIN_EU_868",
+       "REGULATORY_DOMAIN_FCC_915",
+       "REGULATORY_DOMAIN_IN_866",
++      "REGULATORY_DOMAIN_UA_750",
++      "REGULATORY_DOMAIN_UA_980",
+       "BINDING_PHRASE",
+       "TLM_REPORT_INTERVAL_MS",
+       "UNLOCK_HIGHER_POWER",
+@@ -118,6 +124,8 @@
+       "REGULATORY_DOMAIN_EU_868",
+       "REGULATORY_DOMAIN_FCC_915",
+       "REGULATORY_DOMAIN_IN_866",
++      "REGULATORY_DOMAIN_UA_750",
++      "REGULATORY_DOMAIN_UA_980",
+       "BINDING_PHRASE",
+       "LOCK_ON_FIRST_CONNECTION",
+       "RCVR_UART_BAUD"
+diff --git a/devices/hglrc-900.json b/devices/hglrc-900.json
+index 5489dc03..8633136a 100644
+--- a/devices/hglrc-900.json
++++ b/devices/hglrc-900.json
+@@ -21,6 +21,8 @@
+       "REGULATORY_DOMAIN_EU_868",
+       "REGULATORY_DOMAIN_FCC_915",
+       "REGULATORY_DOMAIN_IN_866",
++      "REGULATORY_DOMAIN_UA_750",
++      "REGULATORY_DOMAIN_UA_980",
+       "BINDING_PHRASE",
+       "LOCK_ON_FIRST_CONNECTION",
+       "AUTO_WIFI_ON_INTERVAL",
+diff --git a/devices/iflight-900.json b/devices/iflight-900.json
+index cd3cf94f..80ebdf43 100644
+--- a/devices/iflight-900.json
++++ b/devices/iflight-900.json
+@@ -17,6 +17,8 @@
+       "REGULATORY_DOMAIN_EU_868",
+       "REGULATORY_DOMAIN_FCC_915",
+       "REGULATORY_DOMAIN_IN_866",
++      "REGULATORY_DOMAIN_UA_750",
++      "REGULATORY_DOMAIN_UA_980",
+       "BINDING_PHRASE",
+       "TLM_REPORT_INTERVAL_MS",
+       "UART_INVERTED",
+@@ -50,6 +52,8 @@
+       "REGULATORY_DOMAIN_EU_868",
+       "REGULATORY_DOMAIN_FCC_915",
+       "REGULATORY_DOMAIN_IN_866",
++      "REGULATORY_DOMAIN_UA_750",
++      "REGULATORY_DOMAIN_UA_980",
+       "BINDING_PHRASE",
+       "LOCK_ON_FIRST_CONNECTION",
+       "AUTO_WIFI_ON_INTERVAL",
+diff --git a/devices/jumper-900.json b/devices/jumper-900.json
+index 3a87afc6..10c2a7b3 100644
+--- a/devices/jumper-900.json
++++ b/devices/jumper-900.json
+@@ -17,6 +17,8 @@
+       "REGULATORY_DOMAIN_EU_868",
+       "REGULATORY_DOMAIN_FCC_915",
+       "REGULATORY_DOMAIN_IN_866",
++      "REGULATORY_DOMAIN_UA_750",
++      "REGULATORY_DOMAIN_UA_980",
+       "BINDING_PHRASE",
+       "LOCK_ON_FIRST_CONNECTION",
+       "RCVR_UART_BAUD"
+diff --git a/devices/namimnorc-900.json b/devices/namimnorc-900.json
+index de5fd34c..1c4d69eb 100644
+--- a/devices/namimnorc-900.json
++++ b/devices/namimnorc-900.json
+@@ -16,6 +16,8 @@
+       "REGULATORY_DOMAIN_AU_915",
+       "REGULATORY_DOMAIN_EU_868",
+       "REGULATORY_DOMAIN_FCC_915",
++      "REGULATORY_DOMAIN_UA_750",
++      "REGULATORY_DOMAIN_UA_980",
+       "BINDING_PHRASE",
+       "TLM_REPORT_INTERVAL_MS",
+       "AUTO_WIFI_ON_INTERVAL",
+@@ -43,6 +45,8 @@
+       "REGULATORY_DOMAIN_AU_915",
+       "REGULATORY_DOMAIN_EU_868",
+       "REGULATORY_DOMAIN_FCC_915",
++      "REGULATORY_DOMAIN_UA_750",
++      "REGULATORY_DOMAIN_UA_980",
+       "BINDING_PHRASE",
+       "TLM_REPORT_INTERVAL_MS",
+       "AUTO_WIFI_ON_INTERVAL",
+@@ -71,6 +75,8 @@
+       "REGULATORY_DOMAIN_EU_868",
+       "REGULATORY_DOMAIN_FCC_915",
+       "REGULATORY_DOMAIN_IN_866",
++      "REGULATORY_DOMAIN_UA_750",
++      "REGULATORY_DOMAIN_UA_980",
+       "BINDING_PHRASE",
+       "LOCK_ON_FIRST_CONNECTION",
+       "RCVR_UART_BAUD"
+@@ -101,6 +107,8 @@
+       "REGULATORY_DOMAIN_EU_868",
+       "REGULATORY_DOMAIN_FCC_915",
+       "REGULATORY_DOMAIN_IN_866",
++      "REGULATORY_DOMAIN_UA_750",
++      "REGULATORY_DOMAIN_UA_980",
+       "BINDING_PHRASE",
+       "LOCK_ON_FIRST_CONNECTION",
+       "AUTO_WIFI_ON_INTERVAL",
+diff --git a/devices/neutronrc-900.json b/devices/neutronrc-900.json
+index 9ff6113f..e83b85e3 100644
+--- a/devices/neutronrc-900.json
++++ b/devices/neutronrc-900.json
+@@ -21,6 +21,8 @@
+       "REGULATORY_DOMAIN_EU_868",
+       "REGULATORY_DOMAIN_FCC_915",
+       "REGULATORY_DOMAIN_IN_866",
++      "REGULATORY_DOMAIN_UA_750",
++      "REGULATORY_DOMAIN_UA_980",
+       "BINDING_PHRASE",
+       "LOCK_ON_FIRST_CONNECTION",
+       "AUTO_WIFI_ON_INTERVAL",
+diff --git a/src/api/src/factories/TargetUserDefinesFactory.ts b/src/api/src/factories/TargetUserDefinesFactory.ts
+index c5335a13..2742fec9 100644
+--- a/src/api/src/factories/TargetUserDefinesFactory.ts
++++ b/src/api/src/factories/TargetUserDefinesFactory.ts
+@@ -37,6 +37,18 @@ export default class TargetUserDefinesFactory {
+           false,
+           UserDefineOptionGroup.RegulatoryDomain900
+         );
++      case UserDefineKey.REGULATORY_DOMAIN_UA_750:
++        return UserDefine.Boolean(
++          UserDefineKey.REGULATORY_DOMAIN_UA_750,
++          false,
++          UserDefineOptionGroup.RegulatoryDomain900
++        );
++      case UserDefineKey.REGULATORY_DOMAIN_UA_980:
++        return UserDefine.Boolean(
++          UserDefineKey.REGULATORY_DOMAIN_UA_980,
++          false,
++          UserDefineOptionGroup.RegulatoryDomain900
++        );
+       case UserDefineKey.REGULATORY_DOMAIN_ISM_2400:
+         return UserDefine.Boolean(
+           UserDefineKey.REGULATORY_DOMAIN_ISM_2400,
+diff --git a/src/api/src/library/FirmwareBuilder/Enum/UserDefineKey.ts b/src/api/src/library/FirmwareBuilder/Enum/UserDefineKey.ts
+index 1ef6a788..741264a6 100644
+--- a/src/api/src/library/FirmwareBuilder/Enum/UserDefineKey.ts
++++ b/src/api/src/library/FirmwareBuilder/Enum/UserDefineKey.ts
+@@ -8,6 +8,8 @@ enum UserDefineKey {
+   REGULATORY_DOMAIN_AU_433 = 'DRegulatory_Domain_AU_433',
+   REGULATORY_DOMAIN_EU_433 = 'DRegulatory_Domain_EU_433',
+   REGULATORY_DOMAIN_FCC_915 = 'DRegulatory_Domain_FCC_915',
++  REGULATORY_DOMAIN_UA_750 = 'DRegulatory_Domain_UA_750',
++  REGULATORY_DOMAIN_UA_980 = 'DRegulatory_Domain_UA_980',
+   REGULATORY_DOMAIN_ISM_2400 = 'DRegulatory_Domain_ISM_2400',
+   REGULATORY_DOMAIN_EU_CE_2400 = 'DRegulatory_Domain_EU_CE_2400',
+   // Hybrid switches
+diff --git a/src/api/src/services/BinaryFlashingStrategy/BinaryConfigurator/index.ts b/src/api/src/services/BinaryFlashingStrategy/BinaryConfigurator/index.ts
+index 66397d58..76980ef7 100644
+--- a/src/api/src/services/BinaryFlashingStrategy/BinaryConfigurator/index.ts
++++ b/src/api/src/services/BinaryFlashingStrategy/BinaryConfigurator/index.ts
+@@ -128,6 +128,12 @@ export default class BinaryConfigurator {
+           case UserDefineKey.REGULATORY_DOMAIN_FCC_915:
+             flags.push(['--domain', 'fcc_915']);
+             break;
++          case UserDefineKey.REGULATORY_DOMAIN_UA_750:
++            flags.push(['--domain', 'ua_750']);
++            break;
++          case UserDefineKey.REGULATORY_DOMAIN_UA_980:
++            flags.push(['--domain', 'ua_980']);
++            break;
+           case UserDefineKey.REGULATORY_DOMAIN_EU_868:
+             flags.push(['--domain', 'eu_868']);
+             break;
+diff --git a/src/api/src/services/BinaryFlashingStrategy/DeviceDescriptionsLoader/index.ts b/src/api/src/services/BinaryFlashingStrategy/DeviceDescriptionsLoader/index.ts
+index 8567c532..2b221226 100644
+--- a/src/api/src/services/BinaryFlashingStrategy/DeviceDescriptionsLoader/index.ts
++++ b/src/api/src/services/BinaryFlashingStrategy/DeviceDescriptionsLoader/index.ts
+@@ -318,6 +318,12 @@ export default class DeviceDescriptionsLoader {
+       userDefines.push(
+         targetUserDefinesFactory.build(UserDefineKey.REGULATORY_DOMAIN_FCC_915)
+       );
++      userDefines.push(
++        targetUserDefinesFactory.build(UserDefineKey.REGULATORY_DOMAIN_UA_750)
++      );
++      userDefines.push(
++        targetUserDefinesFactory.build(UserDefineKey.REGULATORY_DOMAIN_UA_980)
++      );
+       userDefines.push(
+         targetUserDefinesFactory.build(UserDefineKey.REGULATORY_DOMAIN_IN_866)
+       );
+diff --git a/src/ui/components/DeviceOptionsForm/index.tsx b/src/ui/components/DeviceOptionsForm/index.tsx
+index a4280f74..2ca764f9 100644
+--- a/src/ui/components/DeviceOptionsForm/index.tsx
++++ b/src/ui/components/DeviceOptionsForm/index.tsx
+@@ -91,6 +91,8 @@ const userDefinesToCategories = (
+       UserDefineKey.REGULATORY_DOMAIN_AU_915,
+       UserDefineKey.REGULATORY_DOMAIN_EU_868,
+       UserDefineKey.REGULATORY_DOMAIN_FCC_915,
++      UserDefineKey.REGULATORY_DOMAIN_UA_750,
++      UserDefineKey.REGULATORY_DOMAIN_UA_980,
+       UserDefineKey.REGULATORY_DOMAIN_IN_866,
+       UserDefineKey.REGULATORY_DOMAIN_ISM_2400,
+       UserDefineKey.REGULATORY_DOMAIN_EU_CE_2400,
+diff --git a/src/ui/components/UserDefineDescription/index.tsx b/src/ui/components/UserDefineDescription/index.tsx
+index 3bf2ef4d..0ed655d1 100644
+--- a/src/ui/components/UserDefineDescription/index.tsx
++++ b/src/ui/components/UserDefineDescription/index.tsx
+@@ -30,6 +30,8 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
+         case UserDefineKey.REGULATORY_DOMAIN_EU_433:
+         case UserDefineKey.REGULATORY_DOMAIN_AU_915:
+         case UserDefineKey.REGULATORY_DOMAIN_FCC_915:
++        case UserDefineKey.REGULATORY_DOMAIN_UA_750:
++        case UserDefineKey.REGULATORY_DOMAIN_UA_980:
+         case UserDefineKey.REGULATORY_DOMAIN_EU_868:
+         case UserDefineKey.REGULATORY_DOMAIN_IN_866:
+           return (
+diff --git a/src/ui/gql/generated/types.ts b/src/ui/gql/generated/types.ts
+index 3c60bbf9..ef92dfb7 100644
+--- a/src/ui/gql/generated/types.ts
++++ b/src/ui/gql/generated/types.ts
+@@ -427,6 +427,8 @@ export enum UserDefineKey {
+   REGULATORY_DOMAIN_EU_868 = 'REGULATORY_DOMAIN_EU_868',
+   REGULATORY_DOMAIN_EU_CE_2400 = 'REGULATORY_DOMAIN_EU_CE_2400',
+   REGULATORY_DOMAIN_FCC_915 = 'REGULATORY_DOMAIN_FCC_915',
++  REGULATORY_DOMAIN_UA_750 = 'REGULATORY_DOMAIN_UA_750',
++  REGULATORY_DOMAIN_UA_980 = 'REGULATORY_DOMAIN_UA_980',
+   REGULATORY_DOMAIN_IN_866 = 'REGULATORY_DOMAIN_IN_866',
+   REGULATORY_DOMAIN_ISM_2400 = 'REGULATORY_DOMAIN_ISM_2400',
+   TLM_REPORT_INTERVAL_MS = 'TLM_REPORT_INTERVAL_MS',
+diff --git a/src/ui/views/ConfiguratorView/UserDefinesValidator.ts b/src/ui/views/ConfiguratorView/UserDefinesValidator.ts
+index af8e93e0..d14d9f99 100644
+--- a/src/ui/views/ConfiguratorView/UserDefinesValidator.ts
++++ b/src/ui/views/ConfiguratorView/UserDefinesValidator.ts
+@@ -10,6 +10,8 @@ export default class UserDefinesValidator {
+       UserDefineKey.REGULATORY_DOMAIN_AU_433,
+       UserDefineKey.REGULATORY_DOMAIN_EU_433,
+       UserDefineKey.REGULATORY_DOMAIN_FCC_915,
++      UserDefineKey.REGULATORY_DOMAIN_UA_750,
++      UserDefineKey.REGULATORY_DOMAIN_UA_980,
+       UserDefineKey.REGULATORY_DOMAIN_IN_866,
+       UserDefineKey.REGULATORY_DOMAIN_ISM_2400,
+       UserDefineKey.REGULATORY_DOMAIN_EU_CE_2400,
+-- 
+2.41.0.windows.3
+

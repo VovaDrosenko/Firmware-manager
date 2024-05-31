@@ -1,0 +1,32 @@
+batch start
+
+# https://www.diatone.us/collections/mamba-vtx/products/mamba-kn-1500mw-1-2g-video-transmitter
+
+# vtxtable, chanel switch not supporting
+vtxtable bands 0
+vtxtable channels 0
+
+# vtx, power switch not suporting
+vtx 0 0 0 0 0 900 900
+vtx 1 0 0 0 0 900 900
+vtx 2 0 0 0 0 900 900
+vtx 3 0 0 0 0 900 900
+vtx 4 0 0 0 0 900 900
+vtx 5 0 0 0 0 900 900
+vtx 6 0 0 0 0 900 900
+vtx 7 0 0 0 0 900 900
+vtx 8 0 0 0 0 900 900
+vtx 9 0 0 0 0 900 900
+
+#osd, not show vtx power
+set osd_vtx_channel_pos = 16600
+
+# config
+set vtx_band = 1
+set vtx_channel = 1
+set vtx_power = 1
+set vtx_low_power_disarm = ON
+set vtx_freq = 1080
+set vtx_pit_mode_freq = 0
+
+save

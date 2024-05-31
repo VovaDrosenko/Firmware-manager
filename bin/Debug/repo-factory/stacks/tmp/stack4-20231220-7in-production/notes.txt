@@ -1,0 +1,12 @@
+taf 7in drone
+
+frame:  mark 4 7in
+esc:    taf 60a, c-h-15 bheli_s (updgated to blujay)
+motors: taf 2806.5, 1300kv
+prop:   
+fc:     taf f405 (dakefpvf405)
+tele:   elrs betafpv es900mhz
+ant:    foxeer
+vtx:    akk dominator 2w
+cam:    mini 19 (noname)
+

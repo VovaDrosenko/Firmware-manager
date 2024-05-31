@@ -1,0 +1,8 @@
+feature SERVO_TILT
+
+resource LED_STRIP 1 NONE
+resource SERVO 1 B03
+
+servo 0 1000 2000 1500 100 7
+
+save

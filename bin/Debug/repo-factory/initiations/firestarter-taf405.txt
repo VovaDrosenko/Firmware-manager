@@ -1,0 +1,13 @@
+resource MOTOR 5 NONE
+resource MOTOR 6 NONE
+resource PINIO 1 B00
+resource PINIO 2 B01
+
+aux 3 40 3 1300 2100 0 0
+aux 4 41 3 1800 2100 0 0
+
+set pinio_config = 1,1,1,1
+set pinio_box = 40,41,255,255
+
+save
+
