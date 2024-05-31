@@ -22,11 +22,11 @@ vtx 9 0 0 0 0 900 900
 set osd_vtx_channel_pos = 16600
 
 # config
-set vtx_band = 1
+set vtx_band = 0
 set vtx_channel = 1
 set vtx_power = 1
 set vtx_low_power_disarm = ON
 set vtx_freq = 1080
 set vtx_pit_mode_freq = 0
-
+1
 save
