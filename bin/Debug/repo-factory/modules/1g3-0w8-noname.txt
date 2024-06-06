@@ -1,11 +1,11 @@
 batch start
 
 # vtxtable, chanel switch not supporting
-vtxtable bands 0
+vtxtable bands 1
 vtxtable channels 0
 
 # vtx, power switch not suporting
-vtx 0 0 0 0 0 900 900
+vtx 0 0 0 0 0 900 800
 vtx 1 0 0 0 0 900 900
 vtx 2 0 0 0 0 900 900
 vtx 3 0 0 0 0 900 900
@@ -17,12 +17,12 @@ vtx 8 0 0 0 0 900 900
 vtx 9 0 0 0 0 900 900
 
 #osd, not show vtx power
-set osd_vtx_channel_pos = 16600
+set a
 
 # config
 set vtx_band = 0
 set vtx_channel = 1
-set vtx_power = 1
+set vtx_power = 0
 set vtx_low_power_disarm = ON
 set vtx_freq = 1080
 set vtx_pit_mode_freq = 0

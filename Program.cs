@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
 
 internal class Program
 {
@@ -120,16 +121,17 @@ internal class Program
                 {
                     Console.WriteLine($"{i + 1}\t{lines[i]}");
                 }
-                Console.WriteLine("\n1 - Return to directory view");
-                Console.WriteLine("2 - Edit file");
+                Console.WriteLine("\n(\"-1\" back)\n(\"2\" Edit file)");
+                
 
                 if (int.TryParse(Console.ReadLine(), out int option))
                 {
                     switch (option)
                     {
-                        case 1:
+                        case -1:
                             break;
                         case 2:
+                            ClearLastLine(3);
                             EditFile(filePath, lines);
                             break;
                         default:
@@ -153,98 +155,110 @@ internal class Program
         }
     }
 
-    public void EditFile(string filePath, string[] lines)
+    public void EditFile(string filePath, string[] txt)
     {
+        string[] lines = txt;
+        List<Tuple<string, string>> editedStrings = new List<Tuple<string, string>>();
         bool editTime = true;
+        Console.WriteLine("(\"-1\" back)\n(\"show\" show changes)\n(\"save\" save changes)");
         while (editTime)
         {
-            Console.Write("Line number: ");
-
-            if (int.TryParse(Console.ReadLine(), out int lineNumber))
+            Console.WriteLine("\nparameter: ");
+            string param = Console.ReadLine();
+            switch (param)
             {
-                if (lineNumber >= 1 && lineNumber <= lines.Length)
-                {
-                    string oldContent = lines[lineNumber - 1];
-                    Console.WriteLine($"Old content {oldContent}");
-                    Console.WriteLine($"Enter the new content for line {lineNumber}:");
-                    string newContent = Console.ReadLine();
-
-                    lines[lineNumber - 1] = newContent;
-
-                    try
-                    {
-                        File.WriteAllLines(filePath, lines);
-
-                        Console.WriteLine("Do you want to update other files? (Y/N)");
-                        string response = Console.ReadLine().Trim().ToUpper();
-                        if (response == "Y")
-                        {
-                            UpdateOtherFiles(filePath, oldContent, newContent);
-                        }
-                        else if (response != "N")
-                        {
-                            Console.WriteLine("Invalid response. Please enter Y or N.");
-                        }
-                    }
-                    catch (IOException ex)
-                    {
-                        Console.WriteLine($"Error updating file: {ex.Message}");
-                    }
-                }
-                else if (lineNumber == -1)
-                {
+                case "-1":
                     editTime = false;
-                }
-                else
-                {
-                    Console.WriteLine("Invalid line number.");
-                }
-            }
-            else
-            {
-                Console.WriteLine("Invalid input. Please enter a number.");
+                    break;
+                case "save":
+                    File.WriteAllLines(filePath, lines);
+                    Console.Write("update other files?(Y/N):");
+                    string resp = Console.ReadLine().ToUpperInvariant();
+                    switch (resp)
+                    {
+                        case "Y":
+                            UpdateOtherFiles(editedStrings);
+                            break;
+                        case "N":
+                            editTime = false;
+                            break;
+                    }
+                    break;
+                case "show":
+                    foreach (Tuple<string, string> line in editedStrings)
+                    {
+                        Console.WriteLine(line.Item1 + " " + line.Item2);
+                    }
+                    break;
+                default:
+                    for (int i = 0; i < lines.Length; i++)
+                    {
+                        if (lines[i].StartsWith(param))
+                        {
+                            Console.Write($"{i + 1}. {param} ");
+                            string value = Console.ReadLine();
+
+                            lines[i] = $"{param} {value}";
+                            editedStrings.Add(new Tuple<string, string>(param, value));
+                            break;
+                        }
+                    }
+                    break;
             }
         }
     }
 
-    public void UpdateOtherFiles(string editedFilePath, string oldContent, string newContent)
+
+    public void UpdateOtherFiles(List<Tuple<string, string>> lines)
     {
-        for(int i = 0; i <listOfDirAndFiles.Count; i++)
+        ShowDir();
+        List<string> listOfFiles = new List<string>();
+        var choice = Console.ReadLine();
+        string[] indexString = choice.Split(' ');
+        int[] indexes = Array.ConvertAll(indexString,int.Parse);
+
+        for (int i = 0; i < indexes.Length; i++) //file
         {
-                string selectedDirOrFile = listOfDirAndFiles[i];
-                if (selectedDirOrFile.StartsWith("[FILE]"))
+            string selectedDirOrFile = listOfDirAndFiles[indexes[i] - 1];
+            string selectedFile = selectedDirOrFile.Substring("[FILE] ".Length);
+            string filePath = Path.Combine(currentDirectory, selectedFile);
+            if (File.Exists(filePath))
+            {
+                try
                 {
-                    string selectedFile = selectedDirOrFile.Substring("[FILE] ".Length);
-                    string filePath = Path.Combine(currentDirectory, selectedFile);
-                    if (File.Exists(filePath))
+                    string[] fileLines = File.ReadAllLines(filePath);
+                    for (int j = 0; j < lines.Count; j++) //param
                     {
-                        try
+                        for (int k = 0; k < fileLines.Length; k++) //text
                         {
-                            string[] fileLines = File.ReadAllLines(filePath);
-                            for (int j = 0; j < fileLines.Length; j++)
+                            if (fileLines[k].Contains(lines[j].Item1))
                             {
-                                if (fileLines[j].Contains(oldContent))
-                                {
-                                    fileLines[j] = fileLines[j].Replace(oldContent, newContent);
-                                }
+                                fileLines[k] = lines[j].Item1 + " " + lines[j].Item2;
                             }
-                            File.WriteAllLines(filePath, fileLines);
-                            Console.WriteLine($"File {selectedFile} updated successfully.");
-                        }
-                        catch (IOException ex)
-                        {
-                            Console.WriteLine($"Error updating file {selectedFile}: {ex.Message}");
                         }
                     }
-                    else
-                    {
-                        Console.WriteLine($"File {selectedFile} does not exist.");
-                    }
+                    File.WriteAllLines(filePath, fileLines);
+                    Console.WriteLine($"File {selectedFile} updated successfully.");
                 }
-                else
+                catch (IOException ex)
                 {
-                    Console.WriteLine($"Selected item is not a file: {selectedDirOrFile}");
+                    Console.WriteLine($"Error updating file {selectedFile}: {ex.Message}");
                 }
+            }
+            else
+            {
+                Console.WriteLine($"File {selectedFile} does not exist.");
+            }
+        }
+    }
+    public void ClearLastLine(int del)
+    {
+        int currentLineCursor = Console.CursorTop;
+        for(int i = 0; i <= del; i++)
+        {
+            Console.SetCursorPosition(0, currentLineCursor - i);
+            Console.Write(new string(' ', Console.WindowWidth));
+            Console.SetCursorPosition(0, currentLineCursor - i);
         }
     }
 }

@@ -31,7 +31,7 @@ vtx 9 0 0 0 0 900 900
 set osd_vtx_channel_pos = 31063
 
 # config
-set vtx_band = 5
+set vtx_band = 3
 set vtx_channel = 1
 set vtx_power = 1
 set vtx_low_power_disarm = ON
